@@ -109,6 +109,7 @@ module Slab
 
         # --- CALL METHOD(create_markdown_string) HERE ---
         release_hash = JSON.parse(res.body)
+        puts(res.body)
         release_new = release_hash.fetch("data").fetch("repository").fetch("latestRelease")
         tag_name = release_new["tagName"]
         markdown_string_new = create_markdown_string(release_new, repo_name, tag_name)
