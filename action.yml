@@ -1,9 +1,8 @@
 name: 'slab github integration'
 description: 'Acces methods to create and update posts on slab'
 inputs: 
-  input1: # first input
-  description: 'test'
-  required: true
+  test: # first input
+  description: 'just description for test input'
   default: '' # probably not needed
 outputs:
   name:
