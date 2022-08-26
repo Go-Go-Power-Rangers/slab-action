@@ -12,6 +12,8 @@ repo_owner = ARGV[1]
 accessToken_slab = ARGV[2] 
 accessToken_github = ARGV[3] 
 topicID= "2w941vt0"
+puts(accessToken_slab)
+puts(accessToken_github)
 
 ### The flow so far:
 # 1. Check Slab for a post titled with currentDate, and either
@@ -46,7 +48,6 @@ query = " query {
 uri = URI("https://api.slab.com/v1/graphql")
 res = queryFunc(uri, accessToken_slab, query)
 json_res = JSON.parse(res.body)
-puts(json_res)
 
 #Dig out the different edges
 edges = json_res.dig("data","search","edges")
