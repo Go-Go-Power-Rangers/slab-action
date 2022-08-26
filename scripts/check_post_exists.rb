@@ -46,6 +46,7 @@ query = " query {
 uri = URI("https://api.slab.com/v1/graphql")
 res = queryFunc(uri, accessToken_slab, query)
 json_res = JSON.parse(res.body)
+puts(json_res)
 
 #Dig out the different edges
 edges = json_res.dig("data","search","edges")
