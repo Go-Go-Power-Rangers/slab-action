@@ -1,11 +1,17 @@
 name: 'slab github integration'
 description: 'Acces methods to create and update posts on slab'
 inputs: 
-  test:
-    description: 'input test'
+  repo_name:
+    description: 'repository name'
     required: true
-  test2:
-    description: 'input test2'
+  repo_owner:
+    description: 'repository owner'
+    required: true
+  accessToken_slab:
+    description: 'valid slab api token'
+    required: true
+  accessToken_github:
+    description: 'valid github api token'
     required: true
 outputs:
   name:
@@ -15,5 +21,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.test }}
-    - ${{ inputs.test2}}
+    - ${{ inputs.repo_name }}
+    - ${{ inputs.repo_owner }}
+    - ${{ inputs.accessToken_slab }}
+    - ${{ inputs.accessToken_github }}
