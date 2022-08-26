@@ -4,4 +4,4 @@ COPY test.rb /test.rb
 
 RUN chmod +x test.rb
 
-ENTRYPOINT ["/test.rb"]
+ENTRYPOINT ["ruby", "/test.rb"]
