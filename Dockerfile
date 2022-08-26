@@ -1,6 +1,6 @@
 FROM ruby:3.0
 
-COPY scripts /
+COPY scripts /scripts
 
 RUN ls
 
