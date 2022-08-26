@@ -1,7 +1,7 @@
 FROM ruby:3.0
 
-COPY test.rb /test.rb
+COPY scripts /.
 
-RUN chmod +x test.rb
+RUN chmod +x /scripts
 
-ENTRYPOINT ["ruby", "/test.rb"]
+ENTRYPOINT ["ruby", "./scripts/check_post_exists.rb"]
