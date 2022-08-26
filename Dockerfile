@@ -2,6 +2,6 @@ FROM ruby:3.0
 
 COPY test.rb /test.rb
 
-# RUN command 
+RUN chmod +x test.rb
 
 ENTRYPOINT ["/test.rb"]
