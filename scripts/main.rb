@@ -24,7 +24,7 @@ currentDate = DateTime.now().strftime('%d-%m-%Y').to_s
 
 existing_post_ID = search_post_exists(accessToken_slab, currentDate)
 
-if(!existing_post_ID)
+if(existing_post_ID == nil)
     res = create_post(accessToken_slab,accessToken_github, repo_name, repo_owner, currentDate)
 else
     res = update_post(accessToken_slab,accessToken_github, repo_name, repo_owner, existing_post_ID, currentDate)
