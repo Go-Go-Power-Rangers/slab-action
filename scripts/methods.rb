@@ -35,7 +35,6 @@ module HelperMethods
             req = Net::HTTP::Post.new(uri)
             req['Content-Type'] = "application/json"
             req['Authorization'] = accessToken
-            # request body
             req.body = JSON[{'query' => query}]
             http.request(req)
         end
@@ -47,21 +46,19 @@ module HelperMethods
         markdown_string = ""
         item_string = ""
         post_title = ""
-        index = 1
         json_content.each do |item|
             if item.fetch("insert") == "\n"
 
                 item_string += "#{item}"
                 item_string = " {\"item\"=>[#{item_string}]}"
                 from_string = JSON.parse(item_string.gsub('=>', ':'))
-                # puts "\ncompleted hash from string #{index}:\n#{from_string["item"]}"
 
                 insert_text = Array.new
                 from_string["item"].each_with_index do |i, index|
                     insert_text.append("#{i["insert"]}")
 
                     # check if insert is a header
-                    if i["attributes"]["header"] != nil
+                    if !!i["attributes"]["header"]
                         case i["attributes"]["header"]
                         # header 1 - return as post_title
                         when 1
@@ -73,31 +70,27 @@ module HelperMethods
                         end
                     # checks if insert text is bold
                     end
-                    if i["attributes"]["bold"] != nil
+                    if !!i["attributes"]["bold"]
                         insert_text[index] = "**#{i["insert"]}**"
                     end
                     # check if insert text is a link and creates hyperlink
-                    if i["attributes"]["link"] != nil
+                    if !!i["attributes"]["link"]
                         insert_text[index] = "[#{insert_text[index]}](#{(i["attributes"]["link"])})"
                     end
                     # check if insert text is a bullet
-                    if i["attributes"]["list"] != nil
+                    if !!i["attributes"]["list"]
                         insert_text[0] = "#{" - " + insert_text[0]}"
                     end
                     # check if insert text is an indent (typically only with bullets) 
-                    # normal indents create code block
-                    if i["attributes"]["indent"] != nil
+                    if !!i["attributes"]["indent"]
                         insert_text[0] = "#{"   " + insert_text[0]}"
                     end
                 end
-                # puts insert_text
 
                 # joins strings in insert_text array to one string and formats \n
                 markdown_string += insert_text.join("").gsub("\n", "\\n")
 
-                # variables for creating hash from json (return content from slab)
                 item_string = ""
-                index += 1
             else
                 item_string += "#{item},"  
             end

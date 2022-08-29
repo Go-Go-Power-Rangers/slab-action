@@ -9,7 +9,7 @@ repo_name = ARGV[0]
 repo_owner = ARGV[1]
 accessToken_slab = ARGV[2] 
 accessToken_github = ARGV[3] 
-# tpoicID should be hardcoded since it 
+# tpoicID does not change and is hardcoded
 topicID= "2w941vt0"
 
 ### The flow so far:
@@ -21,7 +21,6 @@ topicID= "2w941vt0"
 ###
  
 currentDate = DateTime.now().strftime('%d-%m-%Y').to_s
-puts currentDate
 
 query = " query {
     search (
@@ -78,14 +77,11 @@ edges.each_with_index do |edge,i|
     end
 end
 
-puts existing_post_ID
-
 if(existing_post_ID == nil)
     # post does not exist and is created (flow 1.a)
     res = create_post(accessToken_slab,accessToken_github, repo_name, repo_owner, currentDate)
-    puts res
 else
     # post does exist and is updated (flow 1.b)
     res = update_post(accessToken_slab,accessToken_github, repo_name, repo_owner, existing_post_ID, currentDate)
-    puts res
 end
+puts("Finito! \nResponse from slab:\n#{res.inspect()}")
