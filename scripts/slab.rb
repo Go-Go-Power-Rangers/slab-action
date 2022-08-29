@@ -114,7 +114,7 @@ module Slab
     end
 
     # searches for a post with current date and returns id if found, otherwise nil
-    def search_post_exists(accessToken_slab, currentDate)
+    def search_post_exists(accessToken_slab, currentDate, topicID)
         query = " query {
             search (
                 query: \"#{currentDate}\"
