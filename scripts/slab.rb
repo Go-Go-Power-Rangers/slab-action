@@ -1,8 +1,3 @@
-require 'net/http'
-require 'json'
-require 'uri'
-require 'date'
-require 'time'
 require_relative 'methods.rb'
 include HelperMethods
 
