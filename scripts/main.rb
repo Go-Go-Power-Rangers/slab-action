@@ -12,7 +12,7 @@ accessToken_github = ARGV[3]
 # tpoicID does not change and is hardcoded
 topicID= "2w941vt0"
 
-### The flow so far:
+### The flow:
 # 1. Check Slab for a post titled with currentDate, and either
 # - 1a. Find nil, and create a new syncpost with currentDate as externalId
 # - 1b. Find an existing post, extract the content with mads-json-dissection, 
@@ -77,11 +77,9 @@ edges.each_with_index do |edge,i|
     end
 end
 
-if(existing_post_ID == nil)
-    # post does not exist and is created (flow 1.a)
+if(!existing_post_ID)
     res = create_post(accessToken_slab,accessToken_github, repo_name, repo_owner, currentDate)
 else
-    # post does exist and is updated (flow 1.b)
     res = update_post(accessToken_slab,accessToken_github, repo_name, repo_owner, existing_post_ID, currentDate)
 end
 puts("Finito! \nResponse from slab:\n#{res.inspect()}")
