@@ -2,8 +2,6 @@ require 'net/http'
 require 'json'
 require 'uri'
 require 'date'
-require_relative 'methods.rb'
-include CommonMethods
 require_relative 'slab.rb'
 include Slab
 
@@ -11,9 +9,8 @@ repo_name = ARGV[0]
 repo_owner = ARGV[1]
 accessToken_slab = ARGV[2] 
 accessToken_github = ARGV[3] 
+# tpoicID should be hardcoded since it 
 topicID= "2w941vt0"
-puts(repo_name)
-puts(repo_owner)
 
 ### The flow so far:
 # 1. Check Slab for a post titled with currentDate, and either
@@ -45,6 +42,7 @@ query = " query {
         }
     }   
 }"
+
 uri = URI("https://api.slab.com/v1/graphql")
 res = queryFunc(uri, accessToken_slab, query)
 json_res = JSON.parse(res.body)
@@ -83,9 +81,11 @@ end
 puts existing_post_ID
 
 if(existing_post_ID == nil)
+    # post does not exist and is created (flow 1.a)
     res = create_post(accessToken_slab,accessToken_github, repo_name, repo_owner, currentDate)
     puts res
 else
+    # post does exist and is updated (flow 1.b)
     res = update_post(accessToken_slab,accessToken_github, repo_name, repo_owner, existing_post_ID, currentDate)
     puts res
 end
