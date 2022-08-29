@@ -112,4 +112,63 @@ module Slab
         res = queryFunc(uri, accessToken_slab, query)
         return res
     end
+
+    # searches for a post with current date and returns id if found, otherwise nil
+    def search_post_exists(accessToken_slab, currentDate)
+        query = " query {
+            search (
+                query: \"#{currentDate}\"
+                first: 100
+                types: POST
+            ) { 
+                edges {
+                    node {
+                        ... on PostSearchResult {
+                            post {
+                                title, id, topics{
+                                    id
+                                } 
+                            }
+                        }
+                    }
+                }
+            }   
+        }"
+
+        uri = URI("https://api.slab.com/v1/graphql")
+        res = queryFunc(uri, accessToken_slab, query)
+        json_res = JSON.parse(res.body)
+
+        #Dig out the different edges
+        edges = json_res.dig("data","search","edges")
+        posts = []
+        existing_post_ID = nil
+
+        #add each post to the array of posts
+        edges.each_with_index do |edge,i|
+            #add post
+            posts.append(edge.dig("node","post"))
+            #save important attributes
+            post_id = posts[i].fetch("id")
+            post_title = posts[i].fetch("title") 
+            topics = posts[i].fetch("topics")
+            #check if topics exists
+            if(!!topics && post_title == currentDate)
+                #check each topic whether it's the right one
+                topics.each do |topic|
+                    id = topic.dig("id")
+                    #break out of loop if the post with the right topic has been found
+                    if(!!id && id == topicID)
+                        existing_post_ID = post_id
+                        break
+                    end
+                end
+            end
+            #break if post is found
+            if(!!existing_post_ID)
+                break
+            end
+        end
+        return existing_post_ID
+    end
 end
