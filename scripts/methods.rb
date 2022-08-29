@@ -1,14 +1,17 @@
 # release_body is json returned from github release
-module CommonMethods
-    # comment here
+module HelperMethods
+
+    # creates markdown string from github release 
     def create_markdown_string (release_description, repo_name, tag_name)
         markdown_string = ""        
         ul_items = release_description["description"].split("\r").collect(&:strip)
+
         markdown_string += "\\n## #{repo_name} - #{tag_name} \\n"
     
         ul_items.each do |i|
+
+            # checks if any URI is present in string and inserts as markdown hyperlink
             ex_uri = URI.extract(i, ['http', 'https'])
-    
             if ex_uri.any?
                 # add code here if cases with a line having multiple uri appears
                 # ex_uri.each do |uri|
@@ -25,7 +28,7 @@ module CommonMethods
         return markdown_string
     end
 
-    # comment here
+    # requests given URI with query (only for graphql api)
     def queryFunc(exUri, accessToken, query)
         uri = exUri
         res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
@@ -39,7 +42,7 @@ module CommonMethods
         return res
     end
 
-    # comment here
+    # returns post title and newly created markdown string from slab json content
     def create_markdown_from_slabjson(json_content)
         markdown_string = ""
         item_string = ""
