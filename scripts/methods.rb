@@ -29,6 +29,8 @@ class HelperMethods
 
     # returns post title and newly created markdown string from slab json content
     def create_markdown_from_slabjson(json_content)
+      puts("1: #{json_content.size}")
+      puts("2: #{json_content.to_s.size}")
       markdown_string = ""
       item_string = ""
       post_title = ""
