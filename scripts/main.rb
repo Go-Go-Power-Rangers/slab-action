@@ -1,34 +1,33 @@
-require 'net/http'
-require 'json'
-require 'uri'
-require 'date'
-require_relative 'slab.rb'
-include Slab
+require "net/http"
+require "json"
+require "uri"
+require "date"
+require_relative "slab"
 
 repo_name = ARGV[0]
 repo_owner = ARGV[1]
-accessToken_slab = ARGV[2] 
-accessToken_github = ARGV[3] 
+access_token_slab = ARGV[2]
+access_token_github = ARGV[3]
 # tpoicID does not change and is hardcoded
-topicID= "2w941vt0"
+topic_id = "2w941vt0"
 
 ### The flow:
 # 1. Check Slab for a post titled with currentDate, and either
 # - 1a. Find nil, and create a new syncpost with currentDate as externalId
-# - 1b. Find an existing post, extract the content with mads-json-dissection, 
+# - 1b. Find an existing post, extract the content with mads-json-dissection,
 #       merge it with the new content, and override the syncPost by calling it
 #       again with the new merged content.
 ###
 
-latest_release = get_latest_release_github(accessToken_github, repo_name, repo_owner)
+latest_release = get_latest_release_github(access_token_github, repo_name, repo_owner)
 
-currentDate = DateTime.now().strftime('%d-%m-%Y').to_s
+current_date = DateTime.now.strftime("%d-%m-%Y").to_s
 
-existing_post_ID = search_post_exists(accessToken_slab, currentDate, topicID)
+existing_post_id = search_post_exists(access_token_slab, current_date, topic_id)
 
-if(!existing_post_ID)
-    res = create_post(accessToken_slab, repo_name,currentDate, latest_release)
-else
-    res = update_post(accessToken_slab, repo_name, existing_post_ID, currentDate, latest_release)
-end
-puts("Finito! \nResponse from slab:\n#{res.inspect()}")
+res = if existing_post_id
+        update_post(access_token_slab, repo_name, existing_post_id, current_date, latest_release)
+      else
+        create_post(access_token_slab, repo_name, currentDate, latest_release)
+      end
+puts("Finito! \nResponse from slab:\n#{res.inspect}")
