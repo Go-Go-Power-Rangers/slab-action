@@ -6,7 +6,9 @@ class HelperMethods
       markdown_string = ""
       ul_items = release_description["description"].split("\r").collect(&:strip)
 
-      markdown_string += "\\n## #{repo_name} - #{tag_name} \\n"
+      time = Time.now
+      string_time = "#{time.hour}:#{time.min}"
+      markdown_string += "\\n## #{repo_name} - #{tag_name} *kl. #{string_time}*\\n"
 
       ul_items.each do |i|
         # checks if any URI is present in string and inserts as markdown hyperlink
