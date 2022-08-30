@@ -20,7 +20,7 @@ topic_id = "2w941vt0"
 #       again with the new merged content.
 ###
 
-latest_release = get_latest_release_github(access_token_github, repo_name, repo_owner)
+latest_release = HelperMethod.get_latest_release_github(access_token_github, repo_name, repo_owner)
 
 current_date = DateTime.now.strftime("%d-%m-%Y").to_s
 
