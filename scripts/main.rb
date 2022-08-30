@@ -19,14 +19,16 @@ topicID= "2w941vt0"
 #       merge it with the new content, and override the syncPost by calling it
 #       again with the new merged content.
 ###
- 
+
+latest_release = get_latest_release_github(accessToken_github, repo_name, repo_owner)
+
 currentDate = DateTime.now().strftime('%d-%m-%Y').to_s
 
 existing_post_ID = search_post_exists(accessToken_slab, currentDate, topicID)
 
 if(!existing_post_ID)
-    res = create_post(accessToken_slab,accessToken_github, repo_name, repo_owner, currentDate)
+    res = create_post(accessToken_slab, repo_name,currentDate, latest_release)
 else
-    res = update_post(accessToken_slab,accessToken_github, repo_name, repo_owner, existing_post_ID, currentDate)
+    res = update_post(accessToken_slab, repo_name, existing_post_ID, currentDate, latest_release)
 end
 puts("Finito! \nResponse from slab:\n#{res.inspect()}")

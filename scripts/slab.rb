@@ -2,26 +2,10 @@ require_relative 'methods.rb'
 include HelperMethods
 
 module Slab
-    def create_post(accessToken_slab, accessToken_github, repo_name, repo_owner, externalId)        
-        query = " query {
-            repository(owner: \"#{repo_owner}\", name: \"#{repo_name}\") {
-                latestRelease {
-                    name
-                    author
-                        {name}
-                    createdAt
-                    publishedAt
-                    description
-                    tagName
-                }
-            }
-        }"
+    def create_post(accessToken_slab, repo_name, externalId, latest_release)        
 
-        uri = URI("https://api.github.com/graphql")
-        res = queryFunc(uri, accessToken_github, query)
-
-        # extract variables from response
-        release_hash = JSON.parse(res.body)
+        # extract variables from latest_release
+        release_hash = JSON.parse(latest_release.body)
         latestRelease = release_hash.fetch("data").fetch("repository").fetch("latestRelease")
         title = Date.parse(latestRelease.fetch("publishedAt")).strftime("%d-%m-%Y")
         release_tag = latestRelease["tagName"]
@@ -57,7 +41,7 @@ module Slab
     end
 
     # update_post returns response from request to slab with updated markdown string
-    def update_post(accessToken_slab, accessToken_github, repo_name, repo_owner, post_id, externalId)
+    def update_post(accessToken_slab, repo_name, post_id, externalId, latest_release)
         # This script takes post content from slab, reformats the json to markdown
         # and adds new markdown all together, then sends it in a query to slab
 
@@ -70,27 +54,9 @@ module Slab
         res = queryFunc(uri, accessToken_slab, query)
         post_json = JSON.parse(res.body)
         post_content = JSON.parse(post_json.fetch("data").fetch("post").fetch("content"))
-        
-        markdown_string, post_title = create_markdown_from_slabjson(post_content)
-
-        query = " query {
-            repository(owner: \"#{repo_owner}\", name: \"#{repo_name}\") {
-                latestRelease {
-                    name
-                    author
-                        {name}
-                    createdAt
-                    publishedAt
-                    description
-                    tagName
-                }
-            }
-        }"
-        uri = URI("https://api.github.com/graphql")
-        res = queryFunc(uri, accessToken_github, query)
 
         # creates markdown string from new release
-        release_hash = JSON.parse(res.body)
+        release_hash = JSON.parse(latest_release.body)
         release_new = release_hash.fetch("data").fetch("repository").fetch("latestRelease")
         tag_name = release_new["tagName"]
         markdown_string_new = create_markdown_string(release_new, repo_name, tag_name)
