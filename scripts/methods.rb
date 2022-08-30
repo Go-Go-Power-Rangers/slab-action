@@ -103,6 +103,6 @@ module HelperMethods
         }
     }"
     uri = URI("https://api.github.com/graphql")
-    HelperMethods.queryFunc(uri, access_token_github, query)
+    queryFunc(uri, access_token_github, query)
   end
 end

@@ -2,7 +2,7 @@ require "net/http"
 require "json"
 require "uri"
 require "date"
-require_relative "slab"
+require_relative "slab", "methods"
 
 repo_name = ARGV[0]
 repo_owner = ARGV[1]
@@ -19,15 +19,15 @@ topic_id = "2w941vt0"
 #       again with the new merged content.
 ###
 
-latest_release = HelperMethods.get_latest_release_github(access_token_github, repo_name, repo_owner)
+latest_release = get_latest_release_github(access_token_github, repo_name, repo_owner)
 
 current_date = DateTime.now.strftime("%d-%m-%Y").to_s
 
 existing_post_id = search_post_exists(access_token_slab, current_date, topic_id)
 
 res = if existing_post_id
-        Slab.update_post(access_token_slab, repo_name, existing_post_id, current_date, latest_release)
+        update_post(access_token_slab, repo_name, existing_post_id, current_date, latest_release)
       else
-        Slab.create_post(access_token_slab, repo_name, currentDate, latest_release)
+        create_post(access_token_slab, repo_name, currentDate, latest_release)
       end
 puts("Finito! \nResponse from slab:\n#{res.inspect}")
