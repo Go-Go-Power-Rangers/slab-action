@@ -28,19 +28,6 @@ module HelperMethods
         return markdown_string
     end
 
-    # requests given URI with query (only for graphql api)
-    def queryFunc(exUri, accessToken, query)
-        uri = exUri
-        res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-            req = Net::HTTP::Post.new(uri)
-            req['Content-Type'] = "application/json"
-            req['Authorization'] = accessToken
-            req.body = JSON[{'query' => query}]
-            http.request(req)
-        end
-        return res
-    end
-
     # returns post title and newly created markdown string from slab json content
     def create_markdown_from_slabjson(json_content)
         markdown_string = ""
@@ -96,5 +83,38 @@ module HelperMethods
             end
         end
         return markdown_string, post_title
+    end
+
+    # requests given URI with query (only for graphql api)
+    def queryFunc(exUri, accessToken, query)
+        uri = exUri
+        res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+            req = Net::HTTP::Post.new(uri)
+            req['Content-Type'] = "application/json"
+            req['Authorization'] = accessToken
+            req.body = JSON[{'query' => query}]
+            http.request(req)
+        end
+        return res
+    end
+
+    # gets latest release on github (uses queryFunc for request)
+    def get_latest_release_github(accessToken_github, repo_name, repo_owner)
+        query = " query {
+            repository(owner: \"#{repo_owner}\", name: \"#{repo_name}\") {
+                latestRelease {
+                    name
+                    author
+                        {name}
+                    createdAt
+                    publishedAt
+                    description
+                    tagName
+                }
+            }
+        }"
+        uri = URI("https://api.github.com/graphql")
+        res = queryFunc(uri, accessToken_github, query)
+        return res
     end
 end
