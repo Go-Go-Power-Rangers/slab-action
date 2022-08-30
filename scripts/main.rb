@@ -4,6 +4,7 @@ require "uri"
 require "date"
 require_relative "slab"
 require_relative "methods"
+include HelperMethods.get_latest_release_github
 
 repo_name = ARGV[0]
 repo_owner = ARGV[1]
@@ -20,7 +21,7 @@ topic_id = "2w941vt0"
 #       again with the new merged content.
 ###
 
-latest_release = HelperMethods.get_latest_release_github(access_token_github, repo_name, repo_owner)
+latest_release = get_latest_release_github(access_token_github, repo_name, repo_owner)
 
 current_date = DateTime.now.strftime("%d-%m-%Y").to_s
 
