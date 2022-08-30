@@ -24,7 +24,7 @@ latest_release = HelperMethods.get_latest_release_github(access_token_github, re
 
 current_date = DateTime.now.strftime("%d-%m-%Y").to_s
 
-existing_post_id = HelperMethods.search_post_exists(access_token_slab, current_date, topic_id)
+existing_post_id = Slab.search_post_exists(access_token_slab, current_date, topic_id)
 
 res = if existing_post_id
         Slab.update_post(access_token_slab, repo_name, existing_post_id, current_date, latest_release)
