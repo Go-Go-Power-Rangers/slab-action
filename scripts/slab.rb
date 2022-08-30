@@ -54,12 +54,15 @@ module Slab
         res = queryFunc(uri, accessToken_slab, query)
         post_json = JSON.parse(res.body)
         post_content = JSON.parse(post_json.fetch("data").fetch("post").fetch("content"))
+        markdown_string, post_title = create_markdown_from_slabjson(post_content)
 
         # creates markdown string from new release
         release_hash = JSON.parse(latest_release.body)
         release_new = release_hash.fetch("data").fetch("repository").fetch("latestRelease")
         tag_name = release_new["tagName"]
         markdown_string_new = create_markdown_string(release_new, repo_name, tag_name)
+
+        
 
         # combine the post title, current post content and new post content, insert at top
         markdown_string = "#{post_title} #{markdown_string_new} #{markdown_string}"
