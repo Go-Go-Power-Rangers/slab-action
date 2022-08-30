@@ -4,7 +4,7 @@ require "uri"
 require "date"
 require_relative "slab"
 require_relative "methods"
-include HelperMethods.get_latest_release_github
+include methods.HelperMethods.get_latest_release_github
 
 repo_name = ARGV[0]
 repo_owner = ARGV[1]
