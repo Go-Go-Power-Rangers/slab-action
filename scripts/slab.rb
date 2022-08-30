@@ -9,7 +9,7 @@ class Slab
       title = Date.parse(latest_release.fetch("publishedAt")).strftime("%d-%m-%Y")
       release_tag = latest_release["tagName"]
 
-      markdown_string = create_markdown_string(latest_release, repo_name, release_tag)
+      markdown_string = HelperMethods.create_markdown_string(latest_release, repo_name, release_tag)
       markdown_string = "# #{title} #{markdown_string}"
 
       query = " mutation {
@@ -23,7 +23,7 @@ class Slab
           }"
 
       uri = URI("https://api.slab.com/v1/graphql")
-      res = queryFunc(uri, access_token_slab, query)
+      res = HelperMethods.queryFunc(uri, access_token_slab, query)
       json_res = JSON.parse(res.body)
       post_id_var = json_res.dig("data", "syncPost", "id")
 
@@ -35,7 +35,7 @@ class Slab
                   name
               }
           }"
-      queryFunc(uri, access_token_slab, query)
+      HelperMethods.queryFunc(uri, access_token_slab, query)
     end
 
     # update_post returns response from request to slab with updated markdown string
@@ -49,16 +49,16 @@ class Slab
               }
           }"
       uri = URI("https://api.slab.com/v1/graphql")
-      res = queryFunc(uri, access_token_slab, query)
+      res = HelperMethods.queryFunc(uri, access_token_slab, query)
       post_json = JSON.parse(res.body)
       post_content = JSON.parse(post_json.fetch("data").fetch("post").fetch("content"))
-      markdown_string, post_title = create_markdown_from_slabjson(post_content)
+      markdown_string, post_title = HelperMethods.create_markdown_from_slabjson(post_content)
 
       # creates markdown string from new release
       release_hash = JSON.parse(latest_release.body)
       release_new = release_hash.fetch("data").fetch("repository").fetch("latestRelease")
       tag_name = release_new["tagName"]
-      markdown_string_new = create_markdown_string(release_new, repo_name, tag_name)
+      markdown_string_new = HelperMethods.create_markdown_string(release_new, repo_name, tag_name)
 
       # combine the post title, current post content and new post content, insert at top
       markdown_string = "#{post_title} #{markdown_string_new} #{markdown_string}"
@@ -74,7 +74,7 @@ class Slab
               {title, id}
           }"
       uri = URI("https://api.slab.com/v1/graphql")
-      queryFunc(uri, access_token_slab, query)
+      HelperMethods.queryFunc(uri, access_token_slab, query)
     end
 
     # searches for a post with current date and returns id if found, otherwise nil
@@ -100,7 +100,7 @@ class Slab
           }"
 
       uri = URI("https://api.slab.com/v1/graphql")
-      res = queryFunc(uri, access_token_slab, query)
+      res = HelperMethods.queryFunc(uri, access_token_slab, query)
       json_res = JSON.parse(res.body)
 
       # Dig out the different edges
