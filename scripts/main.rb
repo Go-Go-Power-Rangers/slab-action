@@ -2,7 +2,8 @@ require "net/http"
 require "json"
 require "uri"
 require "date"
-require_relative "slab", "methods"
+require_relative "slab"
+require_relative "methods"
 
 repo_name = ARGV[0]
 repo_owner = ARGV[1]
