@@ -23,7 +23,7 @@ class Slab
           }"
 
       uri = URI("https://api.slab.com/v1/graphql")
-      res = HelperMethods.queryFunc(uri, access_token_slab, query)
+      res = HelperMethods.query_func(uri, access_token_slab, query)
       json_res = JSON.parse(res.body)
       post_id_var = json_res.dig("data", "syncPost", "id")
 
@@ -35,7 +35,7 @@ class Slab
                   name
               }
           }"
-      HelperMethods.queryFunc(uri, access_token_slab, query)
+      HelperMethods.query_func(uri, access_token_slab, query)
     end
 
     # update_post returns response from request to slab with updated markdown string
@@ -49,7 +49,7 @@ class Slab
               }
           }"
       uri = URI("https://api.slab.com/v1/graphql")
-      res = HelperMethods.queryFunc(uri, access_token_slab, query)
+      res = HelperMethods.query_func(uri, access_token_slab, query)
       post_json = JSON.parse(res.body)
       post_content = JSON.parse(post_json.fetch("data").fetch("post").fetch("content"))
       markdown_string, post_title = HelperMethods.create_markdown_from_slabjson(post_content)
@@ -74,7 +74,7 @@ class Slab
               {title, id}
           }"
       uri = URI("https://api.slab.com/v1/graphql")
-      HelperMethods.queryFunc(uri, access_token_slab, query)
+      HelperMethods.query_func(uri, access_token_slab, query)
     end
 
     # searches for a post with current date and returns id if found, otherwise nil
@@ -100,7 +100,7 @@ class Slab
           }"
 
       uri = URI("https://api.slab.com/v1/graphql")
-      res = HelperMethods.queryFunc(uri, access_token_slab, query)
+      res = HelperMethods.query_func(uri, access_token_slab, query)
       json_res = JSON.parse(res.body)
 
       # Dig out the different edges
