@@ -4,8 +4,6 @@ COPY scripts /scripts
 
 RUN chmod +x /scripts/main.rb
 
-RUN cat /etc/timezone
-
-RUN date
+ENV TZ="Europe/Denmark"
 
 ENTRYPOINT ["ruby", "/scripts/main.rb"]
