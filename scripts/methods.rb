@@ -13,10 +13,7 @@ class HelperMethods
         # checks if any URI is present in string and inserts as markdown hyperlink
         ex_uri = URI.extract(i, %w[http https])
         if ex_uri.any?
-          # add code here if cases with a line having multiple uri appears
-          # ex_uri.each do |uri|
-          # end
-
+          # assume ex_uri only has 1 uri per line
           normal_text = i.gsub(ex_uri[0].to_s, "")
           hyperlink = "[##{ex_uri[0].split("/")[-1]}](#{ex_uri[0]})"
           markdown_string += " - #{normal_text} #{hyperlink} \\n"
