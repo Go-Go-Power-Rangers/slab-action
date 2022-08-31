@@ -4,7 +4,7 @@ COPY scripts /scripts
 
 RUN chmod +x /scripts/main.rb
 
-ENV TZ="Europe/Denmark"
+ENV TZ="Europe/Amsterdam"
 
 RUN date
 
