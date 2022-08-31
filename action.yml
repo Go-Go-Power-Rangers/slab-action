@@ -13,9 +13,6 @@ inputs:
   accessToken_github:
     description: 'valid github api token'
     required: true
-outputs:
-  name:
-    description: 'just a test for now'
 
 runs:
   using: 'docker'
