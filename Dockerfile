@@ -6,4 +6,6 @@ RUN chmod +x /scripts/main.rb
 
 ENV TZ="Europe/Denmark"
 
+RUN date
+
 ENTRYPOINT ["ruby", "/scripts/main.rb"]
