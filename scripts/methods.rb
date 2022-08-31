@@ -5,8 +5,8 @@ class HelperMethods
     def create_markdown_string(release_description, repo_name, tag_name)
       markdown_string = ""
       ul_items = release_description["description"].split("\r").collect(&:strip)
-
-      time = TZInfo::Timezone.get("CET").now
+      
+      time = Time.now.getlocal
       string_time = "#{time.hour}:#{time.min}"
       markdown_string += "\\n## #{repo_name} - #{tag_name} *kl. #{string_time}*\\n"
 

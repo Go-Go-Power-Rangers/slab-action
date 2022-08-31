@@ -2,7 +2,6 @@ require "net/http"
 require "json"
 require "uri"
 require "date"
-require "tzinfo"
 require_relative "slab"
 require_relative "methods"
 
