@@ -36,6 +36,8 @@ class Slab
               }
           }"
       HelperMethods.query_func(uri, access_token_slab, query)
+      # return response for syncPost query
+      res
     end
 
     # update_post returns response from request to slab with updated markdown string
