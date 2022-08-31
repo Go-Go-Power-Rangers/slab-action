@@ -30,8 +30,6 @@ class HelperMethods
 
     # returns post title and newly created markdown string from slab json content
     def create_markdown_from_slabjson(json_content)
-      puts("1: #{json_content.size}")
-      puts("2: #{json_content.to_s.size}")
       markdown_string = ""
       item_string = ""
       post_title = ""
@@ -62,13 +60,14 @@ class HelperMethods
             insert_text[index] = "**#{i["insert"]}**" if !!i["attributes"]["bold"]
             # check if insert text is a link and creates hyperlink
             insert_text[index] = "[#{insert_text[index]}](#{i["attributes"]["link"]})" if !!i["attributes"]["link"]
+            # check if insert text is italic
+            insert_text[index] = "*#{i["insert"]}*" if !!i["attributes"]["italic"]
             # check if insert text is a bullet
             insert_text[0] = " - #{insert_text[0]}" if !!i["attributes"]["list"]
             # check if insert text is an indent (typically only with bullets)
             insert_text[0] = "    #{insert_text[0]}" if !!i["attributes"]["indent"]
           end
 
-          # joins strings in insert_text array to one string and formats \n
           markdown_string += insert_text.join.gsub("\n", "\\n")
 
           item_string = ""
