@@ -6,7 +6,7 @@ class HelperMethods
       markdown_string = ""
       ul_items = release_description["description"].split("\r").collect(&:strip)
       # put timestamp on title
-      time = Time.now.getlocal.strftime("%I:%M %p")
+      time = Time.now.getlocal.strftime("%l:%M %p")
       markdown_string += "\\n## #{repo_name} - #{tag_name} - *#{time}*\\n"
 
       ul_items.each do |i|
