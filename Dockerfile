@@ -4,6 +4,8 @@ COPY scripts /scripts
 
 RUN chmod +x /scripts/main.rb
 
-RUN timedatectl
+RUN cat /etc/timezone
+
+RUN date
 
 ENTRYPOINT ["ruby", "/scripts/main.rb"]
