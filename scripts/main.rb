@@ -12,8 +12,6 @@ access_token_github = ARGV[3]
 # tpoicID does not change and is hardcoded
 topic_id = "2w941vt0"
 
-puts(DateTime.now)
-
 ### The flow:
 # 1. Check Slab for a post titled with currentDate, and either
 # - 1a. Find nil, and create a new syncpost with currentDate as externalId
