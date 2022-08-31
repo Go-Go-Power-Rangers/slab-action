@@ -4,4 +4,6 @@ COPY scripts /scripts
 
 RUN chmod +x /scripts/main.rb
 
+RUN timedatectl
+
 ENTRYPOINT ["ruby", "/scripts/main.rb"]
