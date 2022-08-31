@@ -14,7 +14,8 @@ The purpose of Slab-action is to automate the publishing of release notes from a
   
 3. The changes are reflected on Slab, and the result of the syncPost mutations (GraphQL) that create/update posts on Slab will print their results to the terminal.
 
-
+![The Architecture](/assets/slab-integration(1).drawio.png)
+<sub>A simple diagram of the architecture and flow</sub>
 
 ## Things to keep in mind:
 
