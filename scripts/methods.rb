@@ -25,9 +25,6 @@ class HelperMethods
         end
         ex_uri.clear
       end
-      puts markdown_string
-      markdown_string = markdown_string.gsub("!["," [").gsub(" [#", "<--").gsub(")]","-->")
-      puts markdown_string
     end
 
     # returns post title and newly created markdown string from slab json content
