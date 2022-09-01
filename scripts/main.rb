@@ -9,8 +9,7 @@ repo_name = ARGV[0]
 repo_owner = ARGV[1]
 access_token_slab = ARGV[2]
 access_token_github = ARGV[3]
-# tpoicID does not change and is hardcoded
-topic_id = "2w941vt0"
+topic_id = ARGV[4]
 
 ### The flow:
 # 1. Check Slab for a post titled with currentDate, and either
@@ -29,6 +28,6 @@ puts(existing_post_id)
 res = if existing_post_id
         Slab.update_post(access_token_slab, repo_name, existing_post_id, current_date, latest_release)
       else
-        Slab.create_post(access_token_slab, repo_name, current_date, latest_release)
+        Slab.create_post(access_token_slab, repo_name, current_date, latest_release, topic_id)
       end
 puts("Finito! \nResponse from slab:\n#{res.inspect}")
