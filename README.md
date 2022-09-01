@@ -6,7 +6,7 @@ The purpose of Slab-action is to automate the publishing of release notes from a
 
 1. When a new release is published on the repository, the workflow executes the `main.rb` script. The repository name and owner, as well as access tokens for both GitHub and Slab, are given as arguments.
 
-2. The ‘main.rb’ script will check whether or not a post exists with the current date as title.
+2. The `main.rb` script will check whether or not a post exists with the current date as title.
 
    1. If a post with the title does not exist, a new post is created with the current date as title and the information from the release notes as its     content. Following this, the post is inserted into a given topic. This is all done through the `create_post` function in the `slab.rb` script. 
     
