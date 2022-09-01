@@ -57,3 +57,4 @@ This is possible to fix by deleting the post and re-creating it, but it is inadv
           repo_owner: ${{ github.repository_owner }}
           accessToken_slab: "${{ secrets.SLAB_TOKEN }}"
           accessToken_github: "bearer ${{ secrets.GITHUB_TOKEN }}"
+          topic_id: "2w941vt0"
