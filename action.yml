@@ -13,6 +13,8 @@ inputs:
   accessToken_github:
     description: 'valid github api token'
     required: true
+  topic_id:
+    description: 'topic in which post is created/updated'
 
 runs:
   using: 'docker'
@@ -22,3 +24,4 @@ runs:
     - ${{ inputs.repo_owner }}
     - ${{ inputs.accessToken_slab }}
     - ${{ inputs.accessToken_github }}
+    - ${{ inputs.topic_id }}

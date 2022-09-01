@@ -2,7 +2,7 @@ require_relative "methods"
 
 class Slab
   class << self
-    def create_post(access_token_slab, repo_name, external_id, latest_release)
+    def create_post(access_token_slab, repo_name, external_id, latest_release, topic_id)
       # extract variables from latest_release
       release_hash = JSON.parse(latest_release.body)
       latest_release = release_hash.fetch("data").fetch("repository").fetch("latestRelease")
@@ -30,7 +30,7 @@ class Slab
       query = " mutation {
               addTopicToPost(
                   postId: \"#{post_id_var}\"
-                  topicId: \"2w941vt0\"
+                  topicId: \"#{topic_id}\"
               ) {
                   name
               }
